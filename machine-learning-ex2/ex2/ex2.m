@@ -32,7 +32,6 @@ X = data(:, [1, 2]); y = data(:, 3);
 
 fprintf(['Plotting data with + indicating (y = 1) examples and o ' ...
          'indicating (y = 0) examples.\n']);
-graphics_toolkit('gnuplot')
 plotData(X, y);
 
 % Put some labels 
@@ -46,6 +45,7 @@ legend('Admitted', 'Not admitted')
 hold off;
 
 fprintf('\nProgram paused. Press enter to continue.\n');
+
 pause;
 
 
