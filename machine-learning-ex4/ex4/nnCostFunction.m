@@ -62,6 +62,46 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%1-----------
+%Init y
+recoded_y = zeros(num_labels, m);
+for i=1:m,
+  recoded_y(y(i), i) = 1; %10*5000
+end;
+
+%Feedforward
+X = [ones(m,1), X];
+Z = sigmoid(X*Theta1');
+Z = [ones(m,1), Z];
+H0 = sigmoid(Z*Theta2'); %5000*10
+
+%Calculate cost
+J = sum(sum(-recoded_y'.*log(H0)-(1-recoded_y').*log(1-H0)))/m;
+regularization = lambda/(2*m)*(sum(sum(Theta1.*Theta1)) + sum(sum(Theta2.*Theta2)));
+J += regularization;
+
+%2-------------
+for t=1:m,
+  %Set input, training_set(t)
+  a = X(t,:)'; %401*1
+  %Feedforward (again)
+  a2 = sigmoid(Theta1*a); %25*401 * 401*1 = 25*1
+  a2 = [1; a2]; %26*1
+  a3 = sigmoid(Theta2*a2); %10*26 * 26*1 = 10*1
+  %Compute error
+  delta_3 = a3-recoded_y(:,t); %10*1
+  delta_2 = Theta2'*delta_3.*sigmoidGradient(a2); %26*10 * 10*1 .*26*1 = 26*1
+  delta_2 = delta_2(2:end); %remove bias 25*1
+  
+  %Acumulate_error
+  Theta1_grad += delta_2*a';  %25*1 * 1*401 = 25*401
+  Theta2_grad += delta_3*a2'; %10*1 * 1*26 = 10*26
+end;
+
+Theta1_grad = Theta1_grad/m;
+Theta2_grad = Theta2_grad/m;
+
+grad = [reshape(Theta1_grad, 1,[]) reshape(Theta2_grad, 1, [])];
 
 
 
