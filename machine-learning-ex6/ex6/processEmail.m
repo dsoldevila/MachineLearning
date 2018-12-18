@@ -96,8 +96,16 @@ while ~isempty(email_contents)
     % Note: You can use strcmp(str1, str2) to compare two strings (str1 and
     %       str2). It will return 1 only if the two strings are equivalent.
     %
-
-
+    found = 0;
+    i = 0;
+    while !found && i <length(vocabList),
+      i++;
+      found = strcmp(str, vocabList{i});
+    endwhile
+    
+    if found
+      word_indices = [word_indices ; i];
+    endif
 
 
 
@@ -121,5 +129,4 @@ end
 
 % Print footer
 fprintf('\n\n=========================\n');
-
 end

@@ -48,7 +48,9 @@ x = zeros(n, 1);
 %
 %
 
-
+for i=1:n,
+  x(i) = any(word_indices==i);
+endfor
 
 
 
