@@ -26,6 +26,11 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+for k=1:K,
+  id = idx == k;
+  size = sum(id);
+  centroids(k, :) = sum(X.*id(:))/size;
+endfor
 
 
 
